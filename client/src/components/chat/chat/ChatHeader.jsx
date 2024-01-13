@@ -1,20 +1,20 @@
 import React, { useContext } from 'react'
 
 import { Box, Typography, styled } from '@mui/material';
-import { Search, MoreVert } from '@mui/icons-material';
-import CallIcon from '@mui/icons-material/Call';
-import VideoCallIcon from '@mui/icons-material/VideoCall';
+import {  MoreVert } from '@mui/icons-material';
 import { defaultProfilePicture } from '../../../constants/data';
 import { AccountContext } from '../../../Context API/AccountProvider';
-import { useStateProvider } from '../../../Context API/StateContext';
-import { reducerCases } from '../../../utils/common-utils';
+import Search from './Search';
 
 const Header = styled(Box)`
-    height: 44px;
-    background: #ededed;
-    display: flex;
-    padding: 8px 16px;
-    align-items: center;
+height: 40px;
+  background: #ededed;
+  display: flex;
+  padding: 8px 16px;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 `;
     
 const Image = styled('img')({
@@ -29,7 +29,7 @@ const Name = styled(Typography)`
 `;
 
 const RightContainer = styled(Box)`
-    margin-left: auto;
+    margin-left:auto;
     & > svg {
         padding: 8px;
         font-size: 22px;
@@ -43,34 +43,11 @@ const Status = styled(Typography)`
     margin-left: 12px !important;
 `;
 
-const ChatHeader = ({person}) => {
-    const [dispatch] = useStateProvider();
+const ChatHeader = ({person,settext}) => {
+ 
     const url =  person.picture || defaultProfilePicture;
   const {ActiveUsers}=useContext(AccountContext);
-  const handleVoiceCall = () => {
-    console.log("call")
-    dispatch({
-      type: reducerCases.SET_VOICE_CALL,
-      voiceCall: {
-        ...person,
-        type: "out-going",
-        callType: "voice",
-        roomId: Date.now(),
-      },
-    });
-  };
-  const handleVideoCall = () => {
-    console.log("call")
-    dispatch({
-      type: reducerCases.SET_VIDEO_CALL,
-      videoCall: {
-        ...person,
-        type: "out-going",
-        callType: "video",
-        roomId: Date.now(),
-      },
-    });
-  };
+  
     return (
         <Header>
             <Image src={url} alt="display picture" />     
@@ -79,10 +56,8 @@ const ChatHeader = ({person}) => {
                 <Status>{ActiveUsers?.find(user=>user.sub===person.sub)? 'Online' : 'Offline'}</Status>    
             </Box>   
             <RightContainer>
-                <Search /> < CallIcon  onClick={handleVoiceCall}/>
-                <VideoCallIcon  onClick={handleVideoCall}/>
-                <MoreVert />    
-               
+               <Search settext={settext}/>
+             
             </RightContainer> 
         </Header>
 

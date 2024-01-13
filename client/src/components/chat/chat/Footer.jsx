@@ -6,7 +6,8 @@ import { uploadfile } from '../../../service/api';
 
 
 const Container = styled(Box)`
-    height: 55px;
+    height: 58px;
+   
     background: #ededed;
     width: 100%;
     display: flex;

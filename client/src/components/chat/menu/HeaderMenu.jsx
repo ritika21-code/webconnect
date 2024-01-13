@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 
 import { MoreVert } from '@mui/icons-material';
 import { Menu, MenuItem, styled } from '@mui/material';
+import Infodrawer from '../drawer/Infodrawer';
 
 
 const MenuOption = styled(MenuItem)`
@@ -19,8 +20,6 @@ const HeaderMenu = ({setdraw}) => {
     
     const [open, setOpen] = useState(false);
     
- 
-
     const handleClick = (event) => {
         setOpen(event.currentTarget);
     };
@@ -49,7 +48,9 @@ const HeaderMenu = ({setdraw}) => {
                     horizontal: 'right',
                 }}
             >
-                <MenuOption onClick={() => { handleClose(); setdraw(true)} }>Profile</MenuOption>
+                <MenuOption onClick={() => { 
+                    handleClose(); 
+                    setdraw(true)} }>Profile</MenuOption>
                 <MenuOption onClick={() => { handleClose(); }}>
                 {/* { showlogoutButton ?
                     <Logout
@@ -61,6 +62,7 @@ const HeaderMenu = ({setdraw}) => {
                 } */}
                 </MenuOption>
             </Menu>
+            <Infodrawer/>
         </>
     )
 }

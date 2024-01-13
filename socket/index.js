@@ -16,13 +16,15 @@ io.on('connection', (socket) => {
     addUser(userData, socket.id);
     io.emit('getUsers', users);
   });
+  console.log('User connected:', socket.id);
+
 
   // Send message
   socket.on('sendMessage', (data) => {
     const user = getUser(data.receiverId);
     console.log(data);
     console.log(user);
-
+  
     // Check if the user is found and has a socketId before emitting the message
     if (user && user.socketId) {
       io.to(user.socketId).emit('getMessage', data);
@@ -33,8 +35,25 @@ io.on('connection', (socket) => {
 
   // Disconnect
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    console.log('User disconnected:', socket.id);
     removeUser(socket.id);
     io.emit('getUsers', users);
   });
+socket.on('connect_error', (error) => {
+  console.error('Socket connection error:', error);
+});
+
+socket.on('error', (error) => {
+  console.error('Socket error:', error);
+});
+
+io.on('connect_error', (error) => {
+  console.error('Socket connection error:', error);
+});
+
+io.on('error', (error) => {
+  console.error('Socket error:', error);
+});
+
+
 });

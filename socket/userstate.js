@@ -1,6 +1,5 @@
 // userState.js
 export let users = [];
-
 export const addUser = (userData, socketId) => {
   const newUser = { ...userData, socketId };
   !users.some((user) => user.sub === userData.sub) && users.push(newUser);
@@ -10,6 +9,7 @@ export const addUser = (userData, socketId) => {
 
 export const removeUser = (socketId) => {
   users = users.filter((user) => user.socketId !== socketId);
+  console.log('User removed:', socketId);
 };
 
 export const getUser = (userId) => {

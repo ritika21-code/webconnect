@@ -6,9 +6,12 @@ export const AccountContext=createContext(null);
 const AccountProvider = ({children}) => {
     const [account,setaccount]=useState();
     const [person,setperson]=useState({});
+    const [showloginButton, setShowloginButton] = useState(true);
+    const [showlogoutButton, setShowlogoutButton] = useState(false);
+
     const [ActiveUsers, setActiveUsers] = useState([]);
     const socket = useRef();
-    const [newMessageFlag, setNewMessageFlag] = useState(false);
+    const [newMessageFlag, setnewMessageFlag] = useState(true);
 
     useEffect(() => {
         socket.current = io('ws://localhost:9000');
@@ -16,7 +19,10 @@ const AccountProvider = ({children}) => {
 
   return (
    <AccountContext.Provider value={{
-account,setaccount,person,setperson,socket,ActiveUsers,setActiveUsers,newMessageFlag,setNewMessageFlag
+account,setaccount,person,setperson,socket,ActiveUsers,setActiveUsers,newMessageFlag,setnewMessageFlag,  showloginButton,
+setShowloginButton,
+showlogoutButton,
+setShowlogoutButton,
    }}>
 {children}
    </AccountContext.Provider>
